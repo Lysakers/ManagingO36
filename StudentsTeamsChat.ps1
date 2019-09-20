@@ -56,6 +56,7 @@ if ($StudentsToMute){
     foreach ($student in $StudentsToMute){
 		Write-host "Student $($student.userprincipalname) been added to policy"
 		Grant-CsTeamsMessagingPolicy -Identity $student.UserPrincipalName -PolicyName $Edu_StudentsMute
+		Grant-CsTeamsCallingPolicy -Identity $student.UserPrincipalName -PolicyName $Edu_StudentsMute
 		Add-ADGroupMember -Identity $OnboradingGroup -Members $student.sAMAccountName
     }
 }
@@ -64,6 +65,7 @@ if ($StudentsToUnmute) {
     foreach ($student in $StudentsToUnmute){
 		Write-host "Student $($student.userprincipalname) been removed from policy"
 		Grant-CsTeamsMessagingPolicy -Identity $student.UserPrincipalName -PolicyName $Edu_StudentsDefault
+		Grant-CsTeamsCallingPolicy -Identity $student.UserPrincipalName -PolicyName $Edu_StudentsMute
 		Remove-ADgroupmember -identity $OnboradingGroup -Members $student.sAMAccountName -Confirm:$false
     }
 }
