@@ -1,19 +1,19 @@
 ﻿
 $l = @{
-    rorikt = GetSetOrUpdate-AddressList -Name "Alle ansatte - ROR-IKT" -RecipientFilter "((RecipientTypeDetails -eq 'UserMailbox') -and (WindowsEmailAddress -like '*@ror-ikt.no'))" -Verbose
+    contoso = GetSetOrUpdate-AddressList -Name "Alle ansatte - contoso" -RecipientFilter "((RecipientTypeDetails -eq 'UserMailbox') -and (WindowsEmailAddress -like '*@contoso.no'))" -Verbose
     alle = GetSetOrUpdate-AddressList -Name "Alle mottakere" -RecipientFilter "Alias -ne `$null" -Verbose
 
 }
 
 $gal = @{
-   rorikt = GetSetOrUpdate-GlobalAddressList -Name "Global Address List - ROR-IKT" -RecipientFilter "((RecipientTypeDetails -eq 'UserMailbox') -and (WindowsEmailAddress -like '*@ror-ikt.no'))" -Verbose
+   contoso = GetSetOrUpdate-GlobalAddressList -Name "Global Address List - contoso" -RecipientFilter "((RecipientTypeDetails -eq 'UserMailbox') -and (WindowsEmailAddress -like '*@contoso.no'))" -Verbose
 }
 
 $oab = @{
-   rorikt = GetSetOrUpdate-OfflineAddressBook -Name "Offline Address Book - ROR-IKT" -AddressLists @($l.values.id + $gal.rorikt.id) -Verbose
+   contoso = GetSetOrUpdate-OfflineAddressBook -Name "Offline Address Book - contoso" -AddressLists @($l.values.id + $gal.contoso.id) -Verbose
 }
 
-GetSetOrUpdate-AddressBookPolicy -Name "ROR-IKT" -AddressLists $l.Values.id -RoomList "\All Rooms" -OfflineAddressBook $oab.rorikt.Id -GlobalAddressList $gal.rorikt.id -Verbose | Out-Null
+GetSetOrUpdate-AddressBookPolicy -Name "contoso" -AddressLists $l.Values.id -RoomList "\All Rooms" -OfflineAddressBook $oab.contoso.Id -GlobalAddressList $gal.contoso.id -Verbose | Out-Null
 
 
 # We need to "tickle" each object, or any new or updated address lists will not contain any recipients:
